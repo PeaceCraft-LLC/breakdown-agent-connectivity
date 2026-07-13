@@ -15,11 +15,12 @@ usage() {
 Usage: setup-breakdown.sh <command> [argument]
 
 Commands:
-  status                  Show platform, app, bridge, and Codex availability
+  status                  Show platform, app, bridge, Codex, and Claude Code availability
   download [path]         Download and verify the stable Breakdown installer
   install [path]          Verify or download a package, then open macOS Installer
   open-app                Open the installed Breakdown app
   configure-codex         Add the installed bridge to Codex MCP configuration
+  configure-claude-code   Add the bridge to Claude Code [local|project|user]
   print-config            Print a Claude-style MCP configuration fragment
 EOF
 }
@@ -86,6 +87,14 @@ codex_configuration_status() {
     fi
 }
 
+claude_configuration_status() {
+    if command -v claude >/dev/null 2>&1 && claude mcp get breakdown >/dev/null 2>&1; then
+        printf 'true'
+    else
+        printf 'false'
+    fi
+}
+
 discovery_status() {
     if [ ! -e "$DISCOVERY_FILE" ]; then
         printf 'missing'
@@ -144,6 +153,8 @@ show_status() {
     printf 'mcp_discovery_status=%s\n' "$(discovery_status)"
     printf 'codex_available=%s\n' "$(command_status codex)"
     printf 'codex_configured=%s\n' "$(codex_configuration_status)"
+    printf 'claude_code_available=%s\n' "$(command_status claude)"
+    printf 'claude_code_configured=%s\n' "$(claude_configuration_status)"
 }
 
 verify_package() {
@@ -241,6 +252,37 @@ configure_codex() {
     codex mcp add breakdown -- "$BRIDGE_PATH"
 }
 
+configure_claude_code() {
+    require_supported_macos
+    if [ ! -x "$BRIDGE_PATH" ]; then
+        echo "Breakdown MCP bridge is not executable at $BRIDGE_PATH" >&2
+        exit 1
+    fi
+    verify_app
+    if ! command -v claude >/dev/null 2>&1; then
+        echo "Claude Code CLI is not available." >&2
+        exit 1
+    fi
+
+    if [ "$#" -eq 0 ]; then
+        claude mcp add breakdown -- "$BRIDGE_PATH"
+        return
+    fi
+    if [ "$#" -ne 1 ]; then
+        echo "Usage: setup-breakdown.sh configure-claude-code [local|project|user]" >&2
+        exit 2
+    fi
+    case "$1" in
+        local|project|user)
+            claude mcp add --scope "$1" breakdown -- "$BRIDGE_PATH"
+            ;;
+        *)
+            echo "Claude Code MCP scope must be local, project, or user." >&2
+            exit 2
+            ;;
+    esac
+}
+
 print_config() {
     newline_count="$(printf '%s' "$BRIDGE_PATH" | wc -l | tr -d ' ')"
     if [ "$newline_count" -ne 0 ] || printf '%s' "$BRIDGE_PATH" | LC_ALL=C grep '[[:cntrl:]]' >/dev/null; then
@@ -277,6 +319,10 @@ case "$command" in
         ;;
     configure-codex)
         configure_codex
+        ;;
+    configure-claude-code)
+        shift
+        configure_claude_code "$@"
         ;;
     print-config)
         print_config

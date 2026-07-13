@@ -87,6 +87,11 @@ cat >"$FAKE_BIN/codex" <<'EOF'
 printf 'codex %s\n' "$*" >>"$FAKE_LOG"
 EOF
 
+cat >"$FAKE_BIN/claude" <<'EOF'
+#!/bin/sh
+printf 'claude %s\n' "$*" >>"$FAKE_LOG"
+EOF
+
 chmod +x "$FAKE_BIN"/*
 
 export PATH="$FAKE_BIN:/usr/bin:/bin"
@@ -104,6 +109,8 @@ printf '%s\n' "$status" | grep -F 'bridge_installed=true' >/dev/null
 printf '%s\n' "$status" | grep -F 'mcp_discovery_status=configured' >/dev/null
 printf '%s\n' "$status" | grep -F 'codex_available=true' >/dev/null
 printf '%s\n' "$status" | grep -F 'codex_configured=true' >/dev/null
+printf '%s\n' "$status" | grep -F 'claude_code_available=true' >/dev/null
+printf '%s\n' "$status" | grep -F 'claude_code_configured=true' >/dev/null
 
 printf '{"disabled": true}\n' >"$HOME/Library/Application Support/Breakdown/local-mcp-server.json"
 disabled_status="$($SCRIPT status)"
@@ -181,6 +188,21 @@ grep -F "$BREAKDOWN_APP_PATH" "$FAKE_LOG" >/dev/null
 
 $SCRIPT configure-codex
 grep -F "codex mcp add breakdown -- $BREAKDOWN_APP_PATH/Contents/MacOS/BreakdownMCPBridge" "$FAKE_LOG" >/dev/null
+
+$SCRIPT configure-claude-code
+grep -F "claude mcp add breakdown -- $BREAKDOWN_APP_PATH/Contents/MacOS/BreakdownMCPBridge" "$FAKE_LOG" >/dev/null
+
+$SCRIPT configure-claude-code user
+grep -F "claude mcp add --scope user breakdown -- $BREAKDOWN_APP_PATH/Contents/MacOS/BreakdownMCPBridge" "$FAKE_LOG" >/dev/null
+
+before_invalid_scope="$(wc -l <"$FAKE_LOG" | tr -d ' ')"
+if $SCRIPT configure-claude-code global >"$TMP/bad-scope.out" 2>"$TMP/bad-scope.err"; then
+    echo "configure-claude-code unexpectedly accepted an invalid scope" >&2
+    exit 1
+fi
+grep -F 'scope must be local, project, or user' "$TMP/bad-scope.err" >/dev/null
+after_invalid_scope="$(wc -l <"$FAKE_LOG" | tr -d ' ')"
+[ "$before_invalid_scope" -eq "$after_invalid_scope" ]
 
 if FAKE_BAD_APP_TEAM=1 "$SCRIPT" configure-codex >"$TMP/bad-app.out" 2>"$TMP/bad-app.err"; then
     echo "configure-codex unexpectedly accepted the wrong app team" >&2

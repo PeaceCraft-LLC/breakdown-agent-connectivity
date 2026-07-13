@@ -33,10 +33,15 @@ The helper exposes separate operations so the calling agent can compose the setu
 ./scripts/setup-breakdown.sh install
 ./scripts/setup-breakdown.sh open-app
 ./scripts/setup-breakdown.sh configure-codex
+./scripts/setup-breakdown.sh configure-claude-code [local|project|user]
 ./scripts/setup-breakdown.sh print-config
 ```
 
-`status` also reports whether the Mac is supported, the app is running, local MCP discovery is missing, disabled, invalid, or configured, and Codex already has a `breakdown` MCP entry.
+`status` also reports whether the Mac is supported, the app is running, local MCP discovery is missing, disabled, invalid, or configured, and Codex or Claude Code already has a `breakdown` MCP entry.
+
+`configure-claude-code` accepts an optional Claude Code MCP scope. Omit it to use Claude Code's default, or pass `local`, `project`, or `user` when a particular scope fits the task.
+
+Claude Code resolves default/local and project-scoped MCP configuration from the current project directory. When using either form, resolve this helper from the skill directory while keeping the intended Claude project as the command's working directory. The Claude configuration fields in `status` are resolved in the same context.
 
 `install` downloads the current stable package from Breakdown's official website, verifies its Developer ID Installer signature, and opens it with the standard macOS installer. An agent can instead use the official download URL or the downloaded package with other installation mechanisms available in its environment.
 

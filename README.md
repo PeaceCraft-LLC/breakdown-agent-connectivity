@@ -13,14 +13,12 @@ Once loaded, the skill can:
 - Recognize tasks where connectivity evidence may be useful.
 - Work with an already connected Breakdown MCP server.
 - Download and open the signed Breakdown installer when the app is absent.
-- Open Breakdown and configure its installed MCP bridge for Codex.
+- Open Breakdown and configure its installed MCP bridge for Codex or Claude Code.
 - Provide a configuration fragment for other stdio MCP clients.
 
 Breakdown requires macOS 13 or later. The application must be running when an MCP client uses its installed bridge.
 
-## Public integration, proprietary application
-
-The files in this repository are open source under Apache-2.0. The Breakdown application and its implementation are distributed separately under Breakdown's own terms. This repository does not contain the Breakdown application or its private source code.
+## Links
 
 - [Download Breakdown](https://breakdown.live/download/mac)
 - [Breakdown for AI agents](https://breakdown.live/for-agents/)
