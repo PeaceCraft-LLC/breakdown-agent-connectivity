@@ -1,0 +1,26 @@
+{
+  "name": "peacecraft",
+  "description": "Agent integrations from PeaceCraft LLC.",
+  "owner": {
+    "name": "PeaceCraft LLC",
+    "email": "info@breakdown.live"
+  },
+  "plugins": [
+    {
+      "name": "breakdown-connectivity",
+      "source": "./",
+      "description": "Use Breakdown to diagnose connectivity-related failures and connect its local MCP server on macOS.",
+      "homepage": "https://breakdown.live/for-agents/",
+      "repository": "https://github.com/PeaceCraft-LLC/breakdown-agent-connectivity",
+      "license": "Apache-2.0",
+      "category": "development",
+      "tags": [
+        "connectivity",
+        "diagnostics",
+        "mcp",
+        "networking",
+        "macos"
+      ]
+    }
+  ]
+}
