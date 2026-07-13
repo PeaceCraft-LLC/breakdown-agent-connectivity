@@ -4,9 +4,24 @@ Give AI agents local evidence for Internet, DNS, Wi-Fi, packet loss, latency, en
 
 This repository contains the public Agent Skill and setup helpers for [Breakdown](https://breakdown.live/), a Mac menu-bar network health application. Breakdown separates LAN, Internet path, and app/service health and exposes bounded evidence through a local MCP server.
 
-## Use the skill
+## Install
 
-The portable skill is at [`skills/breakdown-connectivity`](skills/breakdown-connectivity). Add that directory through the skill installation mechanism supported by your agent environment.
+Choose one installation path. For Codex, Claude Code, and other supported agents, use the open Skills CLI:
+
+```sh
+npx skills add PeaceCraft-LLC/breakdown-agent-connectivity
+```
+
+For Claude Code, install the same skill as a native plugin instead:
+
+```sh
+claude plugin marketplace add PeaceCraft-LLC/breakdown-agent-connectivity
+claude plugin install breakdown-connectivity@peacecraft
+```
+
+Other Agent Skills-compatible environments can install [`skills/breakdown-connectivity`](skills/breakdown-connectivity) through their supported skill mechanism.
+
+## What the skill does
 
 Once loaded, the skill can:
 

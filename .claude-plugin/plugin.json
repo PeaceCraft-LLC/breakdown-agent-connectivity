@@ -1,0 +1,19 @@
+{
+  "name": "breakdown-connectivity",
+  "displayName": "Breakdown Connectivity",
+  "description": "Use Breakdown to diagnose Internet, DNS, Wi-Fi, packet loss, latency, browser, API, and cloud-tool failures on macOS.",
+  "author": {
+    "name": "PeaceCraft LLC",
+    "url": "https://breakdown.live"
+  },
+  "homepage": "https://breakdown.live/for-agents/",
+  "repository": "https://github.com/PeaceCraft-LLC/breakdown-agent-connectivity",
+  "license": "Apache-2.0",
+  "keywords": [
+    "connectivity",
+    "diagnostics",
+    "mcp",
+    "networking",
+    "macos"
+  ]
+}
