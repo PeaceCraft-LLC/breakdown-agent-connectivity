@@ -16,7 +16,7 @@ For Claude Code, install the same skill as a native plugin instead:
 
 ```sh
 claude plugin marketplace add PeaceCraft-LLC/breakdown-agent-connectivity
-claude plugin install breakdown-connectivity@peacecraft
+claude plugin install breakdown-connectivity@breakdown
 ```
 
 Other Agent Skills-compatible environments can install [`skills/breakdown-connectivity`](skills/breakdown-connectivity) through their supported skill mechanism.
