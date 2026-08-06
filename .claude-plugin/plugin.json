@@ -3,7 +3,7 @@
   "displayName": "Breakdown Connectivity",
   "description": "Use Breakdown to diagnose Internet, DNS, Wi-Fi, packet loss, latency, browser, API, and cloud-tool failures on macOS.",
   "author": {
-    "name": "PeaceCraft LLC",
+    "name": "Breakdown",
     "url": "https://breakdown.live"
   },
   "homepage": "https://breakdown.live/for-agents/",

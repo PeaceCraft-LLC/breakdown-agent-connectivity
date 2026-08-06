@@ -1,8 +1,8 @@
 {
-  "name": "peacecraft",
-  "description": "Agent integrations from PeaceCraft LLC.",
+  "name": "breakdown",
+  "description": "Agent integrations from Breakdown.",
   "owner": {
-    "name": "PeaceCraft LLC",
+    "name": "Breakdown",
     "email": "info@breakdown.live"
   },
   "plugins": [
