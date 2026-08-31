@@ -19,6 +19,10 @@ claude plugin marketplace add PeaceCraft-LLC/breakdown-agent-connectivity
 claude plugin install breakdown-connectivity@breakdown
 ```
 
+### Cursor
+
+This repository is packaged as a standard Agent Plugin and is eligible for Cursor marketplace submission. See Cursor's official [plugin submission instructions](https://cursor.com/docs/reference/plugins#submitting-a-plugin).
+
 Other Agent Skills-compatible environments can install [`skills/breakdown-connectivity`](skills/breakdown-connectivity) through their supported skill mechanism.
 
 ## What the skill does
@@ -39,3 +43,7 @@ Breakdown requires macOS 13 or later. The application must be running when an MC
 - [Breakdown for AI agents](https://breakdown.live/for-agents/)
 - [Privacy](https://breakdown.live/privacy/)
 - [Terms](https://breakdown.live/terms/)
+
+## Maintainers
+
+For every release, bump the matching `version` in both [`plugin.json`](plugin.json) and [`.claude-plugin/plugin.json`](.claude-plugin/plugin.json).
