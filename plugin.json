@@ -1,6 +1,6 @@
 {
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "breakdown-connectivity",
-  "displayName": "Breakdown Connectivity",
   "version": "1.0.0",
   "description": "Diagnose network, Internet, Wi-Fi, DNS, packet loss, latency, API, and MCP connectivity failures with Breakdown on macOS.",
   "author": {

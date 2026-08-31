@@ -1,0 +1,31 @@
+name: Test
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  distribution:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Claude Code
+        run: npm install --global @anthropic-ai/claude-code@2.1.236
+      - name: Run distribution tests
+        run: ./tests/distribution-test.sh
+      - name: Smoke clean Claude marketplace install
+        run: |
+          claude_config_dir="$(mktemp -d)"
+          trap 'rm -rf "$claude_config_dir"' EXIT
+          CLAUDE_CONFIG_DIR="$claude_config_dir" claude plugin marketplace add "$GITHUB_WORKSPACE"
+          CLAUDE_CONFIG_DIR="$claude_config_dir" claude plugin install breakdown-connectivity@breakdown --scope user
+      - name: Run setup helper tests
+        run: ./tests/setup-breakdown-test.sh
